@@ -7,7 +7,7 @@ import ProcessingRequest from '../models/processingRequest.js';
 
 const imageProcessingQueue = new Queue('image-processing', {
   redis: {
-    host: 'redis://default:ZRizsmSLvzoONSlAWReWrEUJurJrOUNw@viaduct.proxy.rlwy.net',
+    host: 'viaduct.proxy.rlwy.net',
     port: 26058,
   },
 });
