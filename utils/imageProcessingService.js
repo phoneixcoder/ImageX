@@ -5,7 +5,12 @@ import Queue from 'bull';
 import cloudinary from 'cloudinary';
 import ProcessingRequest from '../models/processingRequest.js';
 
-const imageProcessingQueue = new Queue('image-processing');
+const imageProcessingQueue = new Queue('image-processing', {
+  redis: {
+    host: 'redis://default:ZRizsmSLvzoONSlAWReWrEUJurJrOUNw@viaduct.proxy.rlwy.net',
+    port: 26058,
+  },
+});
 dotenv.config();
 // Configure Cloudinary
 cloudinary.v2.config({
