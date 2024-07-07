@@ -5,11 +5,17 @@ import ProcessingRequest from '../models/processingRequest.js';
 import { processImages } from '../utils/imageProcessingService.js';
 
 export const handleFileUpload = async (req, res) => {
-  const filePath = req.file.path;
+  const { file } = req;
   const requestId = uuidv4();
 
+  if (!file) {
+    return res.status(400).send('No file uploaded');
+  }
+
   try {
+    const filePath = file.path; 
     const records = await validateCsv(filePath);
+
     for (const record of records) {
       const serialNumber = record['S. No.'];
       const productName = record['Product Name'];
@@ -25,11 +31,14 @@ export const handleFileUpload = async (req, res) => {
       await processingRequest.save();
       processImages(requestId, serialNumber, productName, imageUrls); 
     }
+
     res.status(200).json({ requestId });
   } catch (error) {
     console.error('Error processing CSV file:', error);
     res.status(400).send(`Error processing CSV file: ${error}`);
   } finally {
-    fs.remove(filePath);
+    if (filePath) {
+      fs.remove(filePath); 
+    }
   }
 };
