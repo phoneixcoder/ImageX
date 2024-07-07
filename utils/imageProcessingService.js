@@ -9,6 +9,7 @@ const imageProcessingQueue = new Queue('image-processing', {
   redis: {
     host: 'viaduct.proxy.rlwy.net',
     port: 26058,
+    password: "ZRizsmSLvzoONSlAWReWrEUJurJrOUNw"
   },
 });
 dotenv.config();
